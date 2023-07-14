@@ -1,5 +1,6 @@
 import random
 import time
+import re
 from auxiliar import *
 
 
@@ -11,8 +12,9 @@ def calcular_valor_polinomio(polinomio: str, valor: int) -> int:
     :param valor: É o valor que será aplicado no polinômio.
     :param return: Retorna o resultado desse polinômio quando aplicado o valor x.
     '''
-    polinomio = polinomio.replace('^', '**')
-    polinomio = polinomio.replace('x', f'{valor}')
+    # polinomio = polinomio.replace('^', '**')
+    # polinomio = polinomio.replace('x', f'{valor}')
+    polinomio = re.sub(r'x\^', f'{valor}**', polinomio)
     total: int = eval(polinomio) 
     return total
 

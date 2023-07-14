@@ -62,13 +62,21 @@ def menu_comparacao_iteracoes(tipo_de_comparacao) -> None:
         print('****************************************************************************************************************************')
         print('Começo Algoritmo de Monte Carlo')
         print('****************************************************************************************************************************')
-        seg_monte_carlo, microsseg_monte_carlo = media_monte_carlo(resp, tipo_de_comparacao, iter_monte_carlo)
+        seg_monte_carlo, microsseg_monte_carlo, maior_iter_monte_carlo, menor_iter_monte_carlo = media_monte_carlo(resp, tipo_de_comparacao, iter_monte_carlo)
         print('****************************************************************************************************************************')
         print('Começo Algoritmo Determinístico')
         print('****************************************************************************************************************************')
-        seg_deterministico, microsseg_deterministico = media_deterministico(resp, tipo_de_comparacao)
-        print(f'A média de tempo de execução do algoritmo de Monte Carlo para cada iteração foi: {seg_monte_carlo} segundos e {microsseg_monte_carlo}')
+        seg_deterministico, microsseg_deterministico, maior_iter_deterministico, menor_iter_deterministico = media_deterministico(resp, tipo_de_comparacao)
+        print('****************************************************************************************************************************')
+        print(f'A média de tempo de execução do algoritmo de Monte Carlo para cada iteração foi: {seg_monte_carlo} segundos e {microsseg_monte_carlo} microssegundos')
+        print(f'A execução mais demorada do algoritmo de Monte Carlo durou {maior_iter_monte_carlo.seconds} segundos e {maior_iter_monte_carlo.microseconds} microssegundos')
+        print(f'A execução mais curta do algoritmo de Monte Carlo durou {menor_iter_monte_carlo.seconds} segundos e {menor_iter_monte_carlo.microseconds} microssegundos')
+        print('****************************************************************************************************************************')
+        print('****************************************************************************************************************************')
         print(f'A média de tempo de execução do algoritmo Determinístico para cada iteração foi: {seg_deterministico} segundos e {microsseg_deterministico}')
+        print(f'A execução mais demorada do algoritmo Determinístico durou {maior_iter_deterministico.seconds} segundos e {maior_iter_deterministico.microseconds} microssegundos')
+        print(f'A execução mais curta do algoritmo Determinístico durou {menor_iter_deterministico.seconds} segundos e {menor_iter_deterministico.microseconds} microssegundos')
+        print('****************************************************************************************************************************')
 
 
 def media_monte_carlo(repeticoes, tipo_de_comparacao, iter_monte_carlo):
@@ -76,18 +84,32 @@ def media_monte_carlo(repeticoes, tipo_de_comparacao, iter_monte_carlo):
     Essa função recebe o número de iterações e o tipo de comparação a ser feita, e retorna a média dos tempos de execução do algoritmo de monte carlo.
     :param iteracoes: numero de repetições do algoritmo de monte carlo que serão realizadas. 
     :param selecao: tipo de comparação da igualdade de polinômios que será realizada, igualdade verdadeira, falsa ou desconhecida. 
-    :param return: Retorna a média de segundos e microssegundos dos tempos de execução do algoritmo de monte carlo. 
+    :param return: Retorna a média de segundos e microssegundos dos tempos de execução, a execução mais rápida e a mais demorada do algoritmo de monte carlo. 
     '''
+    auxiliar = 0
     inicio_monte_carlo = datetime.datetime.now()
 
     for repeticao in range(int(repeticoes)):
+        inicio_iter_monte_carlo = datetime.datetime.now()
         F_x, G_x, H_x = selecao_polinomios(tipo_de_comparacao)
         print(f'Repetição {repeticao + 1}: {print(algoritmo_monte_carlo(F_x, G_x, H_x, iter_monte_carlo))}')
+        final_iter_monte_carlo = datetime.datetime.now()
+        tempo_iter_monte_carlo = final_iter_monte_carlo - inicio_iter_monte_carlo
+        if auxiliar == 0:
+            maior_iteracao_monte_carlo = tempo_iter_monte_carlo
+            menor_iteracao_monte_carlo = tempo_iter_monte_carlo
+        else:
+            if tempo_iter_monte_carlo >= maior_iteracao_monte_carlo:
+                maior_iteracao_monte_carlo = tempo_iter_monte_carlo
+            if tempo_iter_monte_carlo <= menor_iteracao_monte_carlo:
+                menor_iteracao_monte_carlo = tempo_iter_monte_carlo
+        auxiliar += 1 
 
     final_monte_carlo = datetime.datetime.now()
     tempo_monte_carlo = final_monte_carlo - inicio_monte_carlo
-    media_monte_carlo_segundos, media_monte_carlo_microssegundos = int(tempo_monte_carlo.seconds)/int(repeticoes), int(tempo_monte_carlo.microseconds)/int(int(repeticoes))
-    return media_monte_carlo_segundos, media_monte_carlo_microssegundos
+    media_monte_carlo_segundos = int(tempo_monte_carlo.seconds)/int(repeticoes)
+    media_monte_carlo_microssegundos = int(tempo_monte_carlo.microseconds)/int(repeticoes)
+    return media_monte_carlo_segundos, media_monte_carlo_microssegundos, maior_iteracao_monte_carlo, menor_iteracao_monte_carlo
 
 
 def media_deterministico(repeticoes, tipo_de_comparacao):
@@ -95,18 +117,31 @@ def media_deterministico(repeticoes, tipo_de_comparacao):
     Essa função recebe o número de iterações e o tipo de comparação a ser feita, e retorna a média dos tempos de execução do algoritmo determinístico.
     :param iteracoes: numero de repetições do algoritmo determinístico que serão realizadas. 
     :param selecao: tipo de comparação da igualdade de polinômios que será realizada, igualdade verdadeira, falsa ou desconhecida. 
-    :param return: Retorna a média de segundos e microssegundos dos tempos de execução do algoritmo determinístico. 
+    :param return: Retorna a média de segundos e microssegundos dos tempos de execução, a execução mais rápida e a mais demorada do algoritmo determinístico. 
     '''
+    auxiliar = 0
     inicio_deterministico = datetime.datetime.now()
 
     for iteracao in range(int(repeticoes)):
+        inicio_iter_deterministico = datetime.datetime.now()
         F_x, G_x, H_x = selecao_polinomios(tipo_de_comparacao)
         print(f'Repetição {iteracao + 1}: {print(algoritmo_deterministico(F_x, G_x, H_x))}')
-
+        final_iter_deterministico = datetime.datetime.now()
+        tempo_iter_deterministico = final_iter_deterministico - inicio_iter_deterministico
+        if auxiliar == 0:
+            maior_iteracao_deterministico = tempo_iter_deterministico
+            menor_iteracao_deterministico = tempo_iter_deterministico
+        else:
+            if tempo_iter_deterministico >= maior_iteracao_deterministico:
+                maior_iteracao_deterministico = tempo_iter_deterministico
+            if tempo_iter_deterministico <= menor_iteracao_deterministico:
+                menor_iteracao_deterministico = tempo_iter_deterministico
+        auxiliar += 1 
     final_deterministico = datetime.datetime.now()
     tempo_deterministico = final_deterministico - inicio_deterministico
-    media_deterministico_segundos, media_deterministico_microssegundos = int(tempo_deterministico.seconds)/int(repeticoes), int(tempo_deterministico.microseconds)/int(repeticoes)
-    return media_deterministico_segundos, media_deterministico_microssegundos
+    media_deterministico_segundos = int(tempo_deterministico.seconds)/int(repeticoes)
+    media_deterministico_microssegundos = int(tempo_deterministico.microseconds)/int(repeticoes)
+    return media_deterministico_segundos, media_deterministico_microssegundos, maior_iteracao_deterministico, menor_iteracao_deterministico
 
 
 def selecao_polinomios(tipo_de_comparacao):

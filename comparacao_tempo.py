@@ -101,7 +101,7 @@ def media_monte_carlo(repeticoes, tipo_de_comparacao, iter_monte_carlo):
         else:
             if tempo_iter_monte_carlo >= maior_iteracao_monte_carlo:
                 maior_iteracao_monte_carlo = tempo_iter_monte_carlo
-            if tempo_iter_monte_carlo <= menor_iteracao_monte_carlo:
+            if (tempo_iter_monte_carlo <= menor_iteracao_monte_carlo) and (tempo_iter_monte_carlo != 0):
                 menor_iteracao_monte_carlo = tempo_iter_monte_carlo
         auxiliar += 1 
 
@@ -134,7 +134,7 @@ def media_deterministico(repeticoes, tipo_de_comparacao):
         else:
             if tempo_iter_deterministico >= maior_iteracao_deterministico:
                 maior_iteracao_deterministico = tempo_iter_deterministico
-            if tempo_iter_deterministico <= menor_iteracao_deterministico:
+            if (tempo_iter_deterministico <= menor_iteracao_deterministico) and (tempo_iter_deterministico != 0):
                 menor_iteracao_deterministico = tempo_iter_deterministico
         auxiliar += 1 
     final_deterministico = datetime.datetime.now()
@@ -164,9 +164,6 @@ def selecao_polinomios(tipo_de_comparacao):
         tipo_polinomio: int = random.randint(0, 1)
 
     if tipo_polinomio == 0:
-        # F_x: str = polinomios[0]
-        # G_x: str = polinomios[2]
-        # H_x: str = polinomios[1]
         polinomios[1] = polinomios[1].replace('+', '-')
         F_x: str = polinomios[0]
         G_x: str = polinomios[1]

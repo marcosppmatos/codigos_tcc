@@ -46,7 +46,8 @@ def algoritmo_monte_carlo(F_x: str, G_x: str, H_x: str, iteracoes: int) -> str:
     resultado: str = ''
     grau: int = extrair_grau(H_x)
     percentual_erro: float = 1
-    while contador < iteracoes:
+    # while contador < iteracoes:
+    for contador in range(iteracoes):
         valor: int = random.randint(1, 100*grau)
         valor_F_x: int = calcular_valor_polinomio(F_x, valor) 
         valor_G_x: int = calcular_valor_polinomio(G_x, valor)

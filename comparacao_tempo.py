@@ -101,7 +101,7 @@ def media_deterministico(repeticoes, tipo_de_comparacao):
 
     for iteracao in range(int(repeticoes)):
         F_x, G_x, H_x = selecao_polinomios(tipo_de_comparacao)
-        print(f'Iteração {iteracao + 1}: {print(algoritmo_deterministico(F_x, G_x, H_x))}')
+        print(f'Repetição {iteracao + 1}: {print(algoritmo_deterministico(F_x, G_x, H_x))}')
 
     final_deterministico = datetime.datetime.now()
     tempo_deterministico = final_deterministico - inicio_deterministico
@@ -129,9 +129,13 @@ def selecao_polinomios(tipo_de_comparacao):
         tipo_polinomio: int = random.randint(0, 1)
 
     if tipo_polinomio == 0:
+        # F_x: str = polinomios[0]
+        # G_x: str = polinomios[2]
+        # H_x: str = polinomios[1]
+        polinomios[1] = polinomios[1].replace('+', '-')
         F_x: str = polinomios[0]
-        G_x: str = polinomios[2]
-        H_x: str = polinomios[1]
+        G_x: str = polinomios[1]
+        H_x: str = polinomios[2]
 
     else:
         F_x: str = polinomios[0]

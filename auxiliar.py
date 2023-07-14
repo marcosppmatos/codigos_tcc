@@ -80,9 +80,10 @@ def polinomios_igualdade_falsa() -> tuple:
     quantidade_igualdades: int = len(bd_polinomios())
     indice: int = 'I'+f'{random.randint(1, quantidade_igualdades)}'
     polinomios: list = bd_polinomios()[indice]
+    polinomios[1]: str = polinomios[1].replace('+', '-')
     F_x: str = polinomios[0]
-    G_x: str = polinomios[2]
-    H_x: str = polinomios[1]
+    G_x: str = polinomios[1]
+    H_x: str = polinomios[2]
     print(f'Os polinômios testados serão:')
     print(f'F(X): {F_x}')
     print(f'G(X): {G_x}')

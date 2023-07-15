@@ -93,7 +93,7 @@ def polinomios_usuario() -> tuple:
     return F_x, G_x, H_x
 
 
-def extrair_termos(polinomio: str) -> dict:
+def extrair_termos_grau(polinomio: str) -> dict:
     '''
     Essa função extrai termos do polinômio, retornando um dicionário {grau: coeficiente}.
     :param polinomio: Polinômio que será analisado.

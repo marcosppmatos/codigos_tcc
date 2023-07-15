@@ -2,7 +2,7 @@ import random
 import time
 import re
 from auxiliar import *
-from deterministico import extrair_termos
+from deterministico import extrair_termos_grau
 
 
 
@@ -43,7 +43,7 @@ def algoritmo_monte_carlo(F_x: str, G_x: str, H_x: str, iteracoes: int) -> str:
     '''
     contador: int = 0
     resultado: str = ''
-    grau: int = extrair_termos(H_x)[1]
+    grau: int = extrair_termos_grau(H_x)[1]
     percentual_erro: float = 1
     # while contador < iteracoes:
     for contador in range(iteracoes):

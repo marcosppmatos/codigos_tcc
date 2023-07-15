@@ -9,8 +9,8 @@ def multiplicador_polinomios(F_x: str, G_x: str) -> str:
     :param G_x: É o polinômio que fará o papel de G(X).
     :param return: Retorna o polinômio resultante da multiplicação formatado.
     '''
-    termos_F_x: dict = extrair_termos(F_x)[0]
-    termos_G_x: dict = extrair_termos(G_x)[0]
+    termos_F_x: dict = extrair_termos_grau(F_x)[0]
+    termos_G_x: dict = extrair_termos_grau(G_x)[0]
 
     grau_F_x: int = len(termos_F_x) - 1
     grau_G_x: int = len(termos_G_x) - 1
@@ -37,12 +37,12 @@ def algoritmo_deterministico(F_x: str, G_x: str, H_x: str) -> str:
     '''
     diferentes = False
     resultado_multiplicacao: str = multiplicador_polinomios(F_x, G_x)
-    termos_H_x: dict = extrair_termos(H_x)[0]
-    termos_polinomio_resultado: dict = extrair_termos(resultado_multiplicacao)[0]
-    if extrair_termos(resultado_multiplicacao)[1] != extrair_termos(H_x)[1]:
+    termos_H_x: dict = extrair_termos_grau(H_x)[0]
+    termos_polinomio_resultado: dict = extrair_termos_grau(resultado_multiplicacao)[0]
+    if extrair_termos_grau(resultado_multiplicacao)[1] != extrair_termos_grau(H_x)[1]:
         return 'A igualdade de F(X)*G(X) = H(X) é falsa.'
     else:
-        for grau in range(extrair_termos(resultado_multiplicacao)[1]):
+        for grau in range(extrair_termos_grau(resultado_multiplicacao)[1]):
             if termos_polinomio_resultado[grau] != termos_H_x[grau]:
                 diferentes = True
     if not diferentes:

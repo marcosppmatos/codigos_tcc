@@ -39,25 +39,6 @@ def bd_polinomios() -> dict:
     return polinomios
 
 
-def extrair_grau(polinomio: str) -> int:
-    '''
-    Essa função extrai o grau de um polinômio.
-    :param return: Retorna o grau do polinômio analisado.
-    '''
-    graus: list = []
-    polinomio = polinomio.replace(' ', '')
-    padrao_dos_termos = r"([+-]?\d+)\*?x?\^?\((\d{1,2})?\)"
-    retorno: list = re.findall(padrao_dos_termos, polinomio)
-    for item in retorno:
-        if not item[1]:
-            item = list(item)
-            item[1] = 0
-        grau = int(item[1])
-        graus.append(grau)
-
-    return max(graus)
-
-
 def polinomios_igualdade_verdadeira() -> tuple:
     '''Essa função retorna polinômios cuja igualdade F(X)*G(X) = H(X) é verdadeira.
     :param return : Retorna uma tupla com os três polinômios F(X), G(X) e H(X).'''
@@ -110,4 +91,34 @@ def polinomios_usuario() -> tuple:
     print(f'G(X): {G_x}')
     print(f'H(X): {H_x}')
     return F_x, G_x, H_x
+
+
+def extrair_termos(polinomio: str) -> dict:
+    '''
+    Essa função extrai termos do polinômio, retornando um dicionário {grau: coeficiente}.
+    :param polinomio: Polinômio que será analisado.
+    :param return: Retorna um dicionário cujas chaves são os graus e os valores são os coeficientes. 
+    '''
+    import re
+    polinomio = polinomio.replace(' ', '')
+    padrao_dos_termos = r"([+-]?\d+)\*?x?\^?\((\d{1,2})?\)"
+    retorno: list = re.findall(padrao_dos_termos, polinomio)
+    termos: dict = {}
+    grau_polinomio: int = 0
+
+    for item in retorno:
+        if not item[1]:
+            item = list(item)
+            item[1] = 0
+
+        grau = int(item[1])
+        coeficiente = int(item[0])
+        aux: dict = {grau: coeficiente}
+        termos.update(aux)
+
+        if grau > grau_polinomio:
+            grau_polinomio = grau
+    
+    return termos, grau_polinomio
+
 

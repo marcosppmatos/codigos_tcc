@@ -2,6 +2,7 @@ import random
 import time
 import re
 from auxiliar import *
+from deterministico import extrair_termos
 
 
 
@@ -12,8 +13,6 @@ def calcular_valor_polinomio(polinomio: str, valor: int) -> int:
     :param valor: É o valor que será aplicado no polinômio.
     :param return: Retorna o resultado desse polinômio quando aplicado o valor x.
     '''
-    # polinomio = polinomio.replace('^', '**')
-    # polinomio = polinomio.replace('x', f'{valor}')
     polinomio = re.sub(r'x\^', f'{valor}**', polinomio)
     total: int = eval(polinomio) 
     return total
@@ -44,7 +43,7 @@ def algoritmo_monte_carlo(F_x: str, G_x: str, H_x: str, iteracoes: int) -> str:
     '''
     contador: int = 0
     resultado: str = ''
-    grau: int = extrair_grau(H_x)
+    grau: int = extrair_termos(H_x)[1]
     percentual_erro: float = 1
     # while contador < iteracoes:
     for contador in range(iteracoes):

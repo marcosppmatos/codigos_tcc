@@ -2,29 +2,6 @@ import time
 from auxiliar import *
 
 
-def extrair_termos(polinomio: str) -> dict:
-    '''
-    Essa função extrai termos do polinômio, retornando um dicionário {grau: coeficiente}.
-    :param polinomio: Polinômio que será analisado.
-    :param return: Retorna um dicionário cujas chaves são os graus e os valores são os coeficientes. 
-    '''
-    import re
-    polinomio = polinomio.replace(' ', '')
-    padrao_dos_termos = r"([+-]?\d+)\*?x?\^?\((\d{1,2})?\)"
-    retorno: list = re.findall(padrao_dos_termos, polinomio)
-    termos: dict = {}
-    for item in retorno:
-        if not item[1]:
-            item = list(item)
-            item[1] = 0
-
-        grau = int(item[1])
-        coeficiente = int(item[0])
-        aux: dict = {grau: coeficiente}
-        termos.update(aux)
-    return termos
-
-
 def multiplicador_polinomios(F_x: str, G_x: str) -> str:
     '''
     Essa função multiplica dois polinômios a partir de coeficientes recebidos.
@@ -32,8 +9,8 @@ def multiplicador_polinomios(F_x: str, G_x: str) -> str:
     :param G_x: É o polinômio que fará o papel de G(X).
     :param return: Retorna o polinômio resultante da multiplicação formatado.
     '''
-    termos_F_x: dict = extrair_termos(F_x)
-    termos_G_x: dict = extrair_termos(G_x)
+    termos_F_x: dict = extrair_termos(F_x)[0]
+    termos_G_x: dict = extrair_termos(G_x)[0]
 
     grau_F_x: int = len(termos_F_x) - 1
     grau_G_x: int = len(termos_G_x) - 1
@@ -60,12 +37,12 @@ def algoritmo_deterministico(F_x: str, G_x: str, H_x: str) -> str:
     '''
     diferentes = False
     resultado_multiplicacao: str = multiplicador_polinomios(F_x, G_x)
-    termos_H_x: dict = extrair_termos(H_x)
-    termos_polinomio_resultado: dict = extrair_termos(resultado_multiplicacao)
-    if extrair_grau(resultado_multiplicacao) != extrair_grau(H_x):
+    termos_H_x: dict = extrair_termos(H_x)[0]
+    termos_polinomio_resultado: dict = extrair_termos(resultado_multiplicacao)[0]
+    if extrair_termos(resultado_multiplicacao)[1] != extrair_termos(H_x)[1]:
         return 'A igualdade de F(X)*G(X) = H(X) é falsa.'
     else:
-        for grau in range(extrair_grau(resultado_multiplicacao)):
+        for grau in range(extrair_termos(resultado_multiplicacao)[1]):
             if termos_polinomio_resultado[grau] != termos_H_x[grau]:
                 diferentes = True
     if not diferentes:

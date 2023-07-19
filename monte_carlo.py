@@ -41,11 +41,13 @@ def algoritmo_monte_carlo(F_x: str, G_x: str, H_x: str, iteracoes: int) -> str:
     :param iteracoes: É o número máximo de iterações do algoritmo de Monte Carlo
     :param return: É o retorno do algoritmo de Monte Carlo Baseado-no-Não, decidindo se F(X)*G(X) = H(X).
     '''
-    contador: int = 0
+    contador: int = 1
     resultado: str = ''
     grau: int = extrair_termos_grau(H_x)[1]
     percentual_erro: float = 1
-    # while contador < iteracoes:
+    msg_igualdade_falsa: str = f'A igualdade F(X)*G(X) = H(X) não é verdadeira! \nNúmero de iterações realizadas: {contador}'
+    msg_igualdade_verdadeira: str = f'A igualdade F(X)*G(X) = H(X) é verdadeira! O percentual de certeza dessa resposta\
+        é maior ou igual a {((1 - percentual_erro)*100):0.12f}%!\nNúmero de iterações realizadas: {contador}'
     for contador in range(iteracoes):
         valor: int = random.randint(1, 100*grau)
         valor_F_x: int = calcular_valor_polinomio(F_x, valor) 
@@ -53,9 +55,7 @@ def algoritmo_monte_carlo(F_x: str, G_x: str, H_x: str, iteracoes: int) -> str:
         valor_H_x: int = calcular_valor_polinomio(H_x, valor)
         resultado = teste_valores(valor_F_x, valor_G_x, valor_H_x)
         contador += 1
-        msg_igualdade_falsa: str = f'A igualdade F(X)*G(X) = H(X) não é verdadeira! \nNúmero de iterações realizadas: {contador}'
-        msg_igualdade_verdadeira: str = f'A igualdade F(X)*G(X) = H(X) é verdadeira! O percentual de certeza dessa resposta é maior ou igual a {((1 - percentual_erro)*100):0.12f}%!\
-            \nNúmero de iterações realizadas: {contador}'
+        
         if resultado:
             return msg_igualdade_falsa
         percentual_erro *= (1/100)

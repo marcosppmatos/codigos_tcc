@@ -97,7 +97,7 @@ def extrair_termos_grau(polinomio: str) -> dict:
     '''
     Essa função extrai termos do polinômio, retornando um dicionário {grau: coeficiente}.
     :param polinomio: Polinômio que será analisado.
-    :param return: Retorna um dicionário cujas chaves são os graus e os valores são os coeficientes. 
+    :param return: Retorna uma tupla, o 1o elemento é um dicionário cujas chaves são os graus e os valores são os coeficientes, o 2o o grau do polinômio. 
     '''
     import re
     polinomio = polinomio.replace(' ', '')

@@ -53,11 +53,13 @@ def algoritmo_monte_carlo(F_x: str, G_x: str, H_x: str, iteracoes: int) -> str:
         valor_H_x: int = calcular_valor_polinomio(H_x, valor)
         resultado = teste_valores(valor_F_x, valor_G_x, valor_H_x)
         contador += 1
-        if resultado:
-            return f'A igualdade F(X)*G(X) = H(X) não é verdadeira! \nNúmero de iterações realizadas: {contador}'
-        percentual_erro *= (1/100)
-    return f'A igualdade F(X)*G(X) = H(X) é verdadeira! O percentual de certeza dessa resposta é maior ou igual a {((1 - percentual_erro)*100):0.12f}%!\
+        msg_igualdade_falsa: str = f'A igualdade F(X)*G(X) = H(X) não é verdadeira! \nNúmero de iterações realizadas: {contador}'
+        msg_igualdade_verdadeira: str = f'A igualdade F(X)*G(X) = H(X) é verdadeira! O percentual de certeza dessa resposta é maior ou igual a {((1 - percentual_erro)*100):0.12f}%!\
             \nNúmero de iterações realizadas: {contador}'
+        if resultado:
+            return msg_igualdade_falsa
+        percentual_erro *= (1/100)
+    return msg_igualdade_verdadeira
 
 
 def monte_carlo_igualdade_verdadeira() -> None:

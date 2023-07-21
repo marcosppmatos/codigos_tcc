@@ -93,7 +93,7 @@ def polinomios_usuario() -> tuple:
     return F_x, G_x, H_x
 
 
-def extrair_termos_grau(polinomio: str) -> dict:
+def extrair_termos_grau(polinomio: str) -> tuple:
     '''
     Essa função extrai termos do polinômio, retornando um dicionário {grau: coeficiente}.
     :param polinomio: Polinômio que será analisado.
@@ -101,6 +101,7 @@ def extrair_termos_grau(polinomio: str) -> dict:
     '''
     import re
     polinomio = polinomio.replace(' ', '')
+    #Deve identificar termos no formato +a*x^(b)
     padrao_dos_termos = r"([+-]?\d+)\*?x?\^?\((\d{1,2})?\)"
     retorno: list = re.findall(padrao_dos_termos, polinomio)
     termos: dict = {}

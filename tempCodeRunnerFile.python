@@ -1,0 +1,24 @@
+import re
+import random
+PADRAO_COEFICIENTES: str = r'\(x? [+-]? \d*\)'
+RE_COEFICIENTES = re.compile(PADRAO_COEFICIENTES)
+
+def multi(pol1, pol2):
+    termos_p1 = RE_COEFICIENTES.findall(pol1)
+    termos_p2 = RE_COEFICIENTES.findall(pol2)
+
+def gera(n):
+    res = []
+    for i in range(n):
+        sinal = random.randint(0, 1)
+        if sinal == 0:
+            sinal = '+ '
+        else:
+            sinal = '- '
+        valor = random.randint(1, 15)
+        aux = f'(x {sinal}{valor})'
+        res.append(aux)
+    
+    return res
+
+print(gera(5))

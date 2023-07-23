@@ -40,8 +40,8 @@ def main():
     quicksort_deterministico(lista_aleatoria)
     tempo_deterministico = time.time() - inicio
 
-    print(f"Lista Ordenada pelo randomizado: {quicksort_randomizado(lista_aleatoria)}")
-    print(f"Lista Ordenada pelo Determinístico: {quicksort_deterministico(lista_aleatoria)}")
+    # print(f"Lista Ordenada pelo randomizado: {quicksort_randomizado(lista_aleatoria)}")
+    # print(f"Lista Ordenada pelo Determinístico: {quicksort_deterministico(lista_aleatoria)}")
     
     if tempo_deterministico > tempo_randomizado:
         print(f'O algoritmo quicksort foi mais rápido! Tempo de execução {tempo_randomizado}')
